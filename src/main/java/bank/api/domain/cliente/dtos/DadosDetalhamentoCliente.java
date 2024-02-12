@@ -1,6 +1,7 @@
-package bank.api.domain.cliente;
+package bank.api.domain.cliente.dtos;
 
-import bank.api.domain.endereco.Endereco;
+import bank.api.domain.cliente.models.Cliente;
+import bank.api.domain.endereco.models.Endereco;
 
 public record DadosDetalhamentoCliente(
         Long id,

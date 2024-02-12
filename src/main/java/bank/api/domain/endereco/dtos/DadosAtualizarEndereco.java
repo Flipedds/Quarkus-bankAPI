@@ -1,4 +1,4 @@
-package bank.api.domain.endereco;
+package bank.api.domain.endereco.dtos;
 
 import jakarta.validation.constraints.Pattern;
 

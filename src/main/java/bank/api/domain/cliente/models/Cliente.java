@@ -1,6 +1,8 @@
-package bank.api.domain.cliente;
+package bank.api.domain.cliente.models;
 
-import bank.api.domain.endereco.Endereco;
+import bank.api.domain.cliente.dtos.DadosAtualizarCliente;
+import bank.api.domain.cliente.dtos.DadosCadastroCliente;
+import bank.api.domain.endereco.models.Endereco;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

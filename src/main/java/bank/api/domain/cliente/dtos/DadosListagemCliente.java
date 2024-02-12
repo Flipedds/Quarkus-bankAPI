@@ -1,4 +1,6 @@
-package bank.api.domain.cliente;
+package bank.api.domain.cliente.dtos;
+
+import bank.api.domain.cliente.models.Cliente;
 
 public record DadosListagemCliente(
         Long id,

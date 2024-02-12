@@ -1,6 +1,6 @@
-package bank.api.domain.cliente;
+package bank.api.domain.cliente.dtos;
 
-import bank.api.domain.endereco.DadosEndereco;
+import bank.api.domain.endereco.dtos.DadosEndereco;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

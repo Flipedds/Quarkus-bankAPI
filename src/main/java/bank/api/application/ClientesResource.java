@@ -1,6 +1,9 @@
 package bank.api.application;
 
-import bank.api.domain.cliente.*;
+import bank.api.domain.cliente.dtos.DadosAtualizarCliente;
+import bank.api.domain.cliente.dtos.DadosCadastroCliente;
+import bank.api.domain.cliente.dtos.DadosDetalhamentoCliente;
+import bank.api.domain.cliente.services.ClienteService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
