@@ -2,8 +2,8 @@ package bank.api.domain.cliente;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -17,6 +17,10 @@ public class ClienteService {
     }
 
     public Cliente findCliente(Long id){
+        var cliente = clienteRepository.findById(id);
+        if(cliente == null){
+            throw new EntityNotFoundException("Cliente não encontrado !");
+        }
         return clienteRepository.findById(id);
     }
 
@@ -29,12 +33,19 @@ public class ClienteService {
 
     @Transactional
     public void deleteCliente(Long id){
+        var cliente = clienteRepository.findById(id);
+        if(cliente == null){
+            throw new EntityNotFoundException("Cliente não encontrado !");
+        }
         clienteRepository.deleteById(id);
     }
 
     @Transactional
     public Cliente putCliente(DadosAtualizarCliente dados){
         var cliente = clienteRepository.findById(dados.id());
+        if(cliente == null){
+            throw new EntityNotFoundException("Cliente não encontrado !");
+        }
         cliente.atualizarInformacoes(dados);
         return cliente;
     }
