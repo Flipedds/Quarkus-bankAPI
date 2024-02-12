@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientesResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClientesResourceTest (QuarkusTest)</a> &gt; <a href="index.source.html" class="el_package">bank.api.application</a> &gt; <span class="el_source">ClientesResource.java</span></div><h1>ClientesResource.java</h1><pre class="source lang-java linenums">package bank.api.application;
+
+import bank.api.domain.cliente.*;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
+import java.net.URI;
+
+@Path(&quot;/clientes&quot;)
+<span class="fc" id="L11">public class ClientesResource {</span>
+
+    @Inject
+    ClienteService clienteService;
+
+    @GET
+    @RolesAllowed(&quot;manager&quot;)
+    public Response recuperaClientes(){
+<span class="fc" id="L19">        return Response.status(200).entity(clienteService.findAllClientes()).build();</span>
+    }
+
+    @GET
+    @Path(&quot;/{id}&quot;)
+    @RolesAllowed(&quot;manager&quot;)
+    public Response recuperaCliente(@PathParam(&quot;id&quot;) Long id){
+<span class="fc" id="L26">        var cliente = clienteService.findCliente(id);</span>
+<span class="fc" id="L27">        return Response.status(200).entity(new DadosDetalhamentoCliente(cliente)).build();</span>
+    }
+
+    @POST
+    @RolesAllowed(&quot;manager&quot;)
+    public Response addCliente(DadosCadastroCliente dados){
+<span class="fc" id="L33">        var cliente = clienteService.addCliente(dados);</span>
+<span class="fc" id="L34">        URI uri = URI.create(&quot;/clientes/&quot;+cliente.getId());</span>
+<span class="fc" id="L35">        return Response.created(uri).entity(cliente).build();</span>
+    }
+
+    @DELETE
+    @Path(&quot;/{id}&quot;)
+    @RolesAllowed(&quot;manager&quot;)
+    public Response removeCliente(@PathParam(&quot;id&quot;) Long id){
+<span class="fc" id="L42">        clienteService.deleteCliente(id);</span>
+<span class="fc" id="L43">        return Response.noContent().build();</span>
+    }
+
+    @PUT
+    @RolesAllowed(&quot;manager&quot;)
+    public Response atualizaCliente(DadosAtualizarCliente dados){
+<span class="fc" id="L49">        var cliente = clienteService.putCliente(dados);</span>
+<span class="fc" id="L50">        return Response.status(200).entity(new DadosDetalhamentoCliente(cliente)).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
