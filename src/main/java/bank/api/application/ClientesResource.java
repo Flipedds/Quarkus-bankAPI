@@ -18,8 +18,11 @@ public class ClientesResource {
 
     @GET
     @RolesAllowed("manager")
-    public Response recuperaClientes(){
-        return Response.status(200).entity(clienteService.findAllClientes()).build();
+    public Response recuperaClientes(
+            @QueryParam("pagina") int pagina,
+            @QueryParam("tamanho") int tamanho,
+            @QueryParam("order") String order){
+        return Response.status(200).entity(clienteService.findAllClientes(pagina, tamanho, order)).build();
     }
 
     @GET
