@@ -3,6 +3,7 @@ package bank.api.domain.conta.services;
 import bank.api.domain.conta.dtos.DadosCadastroConta;
 import bank.api.domain.conta.dtos.DadosListagemConta;
 import bank.api.domain.conta.models.Conta;
+import bank.api.infra.exceptions.ConflictException;
 import bank.api.infra.repositories.ClienteRepository;
 import bank.api.infra.repositories.ContaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,6 +28,10 @@ public class ContaService {
         var cliente = clienteRepository.findById(dados.clienteId());
         if (cliente == null){
                 throw new EntityNotFoundException("Cliente não encontrado !");
+        }
+        if(contaRepository.findContaByClienteAndTipo(dados.clienteId(), dados.tipoConta()) != null){
+            throw new ConflictException(
+                    "Cliente já possui uma conta deste tipo: " + dados.tipoConta());
         }
         var conta = new Conta(
                 null, cliente,

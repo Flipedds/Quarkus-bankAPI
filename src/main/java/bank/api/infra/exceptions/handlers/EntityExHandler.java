@@ -1,5 +1,6 @@
-package bank.api.infra.exceptions;
+package bank.api.infra.exceptions.handlers;
 
+import bank.api.infra.exceptions.ErrorMessage;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -8,7 +9,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-public class EntityException implements ExceptionMapper<EntityNotFoundException> {
+public class EntityExHandler implements ExceptionMapper<EntityNotFoundException> {
     @Override
     @Produces(MediaType.APPLICATION_JSON)
     public Response toResponse(EntityNotFoundException exception) {
