@@ -4,6 +4,7 @@ import bank.api.domain.conta.dtos.DadosCadastroConta;
 import bank.api.domain.conta.dtos.DadosListagemConta;
 import bank.api.domain.conta.models.Conta;
 import bank.api.domain.conta.services.validadores.Validador;
+import bank.api.infra.exceptions.ConflictException;
 import bank.api.infra.repositories.ClienteRepository;
 import bank.api.infra.repositories.ContaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -67,6 +68,10 @@ public class ContaService {
         if(!conta.getEstaAtiva()){
             throw new EntityNotFoundException("Conta não está ativa !");
         }
+        if(conta.getSaldo().compareTo(BigDecimal.ZERO) > 0)
+        {
+            throw new ConflictException("Conta possui saldo, não é possível desativar !");
+        }
         conta.delete();
     }
-}
+
