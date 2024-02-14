@@ -22,8 +22,8 @@ public class ContasResourceTest {
                 .contentType(ContentType.JSON)
                 .body("""
                         {
-                          "tipoConta": "CORRENTE",
-                          "clienteId": 1
+                          "tipoConta": "POUPANCA",
+                          "clienteId": 2
                         }
                         """)
                 .when().post()
@@ -103,8 +103,35 @@ public class ContasResourceTest {
         given()
                 .header("Authorization",
                         "Bearer " + token)
-                .when().delete("/4")
+                .when().delete("/8")
                 .then()
                 .statusCode(204);
+    }
+
+    @Test
+    void testErroAoCriarContaClienteJaPossuiEsteTipoDeContaCodigo409() {
+        given()
+                .header("Authorization",
+                        "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body("""
+                        {
+                          "tipoConta": "CORRENTE",
+                          "clienteId": 1
+                        }
+                        """)
+                .when().post()
+                .then()
+                .statusCode(409);
+    }
+
+    @Test
+    void testDesativandoContaComSaldoCodigo409() {
+        given()
+                .header("Authorization",
+                        "Bearer " + token)
+                .when().delete("/5")
+                .then()
+                .statusCode(409);
     }
 }
