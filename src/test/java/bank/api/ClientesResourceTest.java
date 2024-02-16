@@ -1,6 +1,6 @@
 package bank.api;
 
-import bank.api.application.ClientesResource;
+import bank.api.application.cliente.resources.ClientesResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
@@ -161,7 +161,7 @@ class ClientesResourceTest {
         given()
                 .header("Authorization",
                         "Bearer " + token)
-                .when().delete("/22")
+                .when().delete("/4")
                 .then()
                 .statusCode(204);
     }

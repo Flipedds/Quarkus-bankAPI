@@ -1,6 +1,6 @@
 package bank.api;
 
-import bank.api.application.ContasResource;
+import bank.api.application.conta.resources.ContasResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
