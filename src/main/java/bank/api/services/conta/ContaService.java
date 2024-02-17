@@ -8,6 +8,7 @@ import bank.api.domain.conta.repositories.IContaRepository;
 import bank.api.services.conta.validadores.Validador;
 import bank.api.domain.conta.services.IContaService;
 import bank.api.infra.exceptions.ConflictException;
+import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
@@ -45,9 +46,11 @@ public class ContaService implements IContaService {
         return conta;
     }
 
-    public List<DadosListagemConta> findAllContas(){
-        return contaRepository.findContasAtivas()
+    public List<DadosListagemConta> findAllContas(Integer pagina, Integer tamanho){
+        return contaRepository.findAll()
+                .page(Page.of(pagina, tamanho))
                 .stream()
+                .filter(Conta::getEstaAtiva)
                 .map(DadosListagemConta::new)
                 .toList();
     }

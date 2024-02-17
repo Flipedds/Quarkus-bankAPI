@@ -24,8 +24,9 @@ public class ContasResource {
 
     @GET
     @RolesAllowed("manager")
-    public Response recuperaContas(){
-        return Response.status(200).entity(contaService.findAllContas()).build();
+    public Response recuperaContas(@QueryParam("pagina") int pagina,
+                                   @QueryParam("tamanho") int tamanho){
+        return Response.status(200).entity(contaService.findAllContas(pagina, tamanho)).build();
     }
 
     @GET

@@ -10,8 +10,8 @@ import java.util.List;
 public interface IContaService {
     @Transactional
     Conta addConta(DadosCadastroConta dados);
-    public List<DadosListagemConta> findAllContas();
-    public Conta findConta(Long id);
+    List<DadosListagemConta> findAllContas(Integer pagina, Integer tamanho);
+    Conta findConta(Long id);
     @Transactional
-    public void DeleteLogicConta(Long id);
+    void DeleteLogicConta(Long id);
 }
