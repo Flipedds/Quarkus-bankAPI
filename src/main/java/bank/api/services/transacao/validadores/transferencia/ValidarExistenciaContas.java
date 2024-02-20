@@ -2,12 +2,13 @@ package bank.api.services.transacao.validadores.transferencia;
 
 import bank.api.application.transacao.dtos.DadosNovaTransacao;
 import bank.api.domain.conta.repositories.IContaRepository;
+import bank.api.domain.transacao.validators.IValidadorTransferencia;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @ApplicationScoped
-public class ValidarExistenciaContas implements IValidadorTransferencia{
+public class ValidarExistenciaContas implements IValidadorTransferencia {
     @Inject
     IContaRepository contaRepository;
 

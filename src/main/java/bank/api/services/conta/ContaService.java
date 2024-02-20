@@ -5,7 +5,7 @@ import bank.api.application.conta.dtos.DadosListagemConta;
 import bank.api.domain.cliente.repositories.IClienteRepository;
 import bank.api.domain.conta.entities.Conta;
 import bank.api.domain.conta.repositories.IContaRepository;
-import bank.api.services.conta.validadores.Validador;
+import bank.api.domain.conta.validators.Validador;
 import bank.api.domain.conta.services.IContaService;
 import bank.api.infra.exceptions.ConflictException;
 import io.quarkus.panache.common.Page;

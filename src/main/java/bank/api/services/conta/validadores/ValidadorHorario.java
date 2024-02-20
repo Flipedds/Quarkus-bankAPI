@@ -1,6 +1,7 @@
 package bank.api.services.conta.validadores;
 
 import bank.api.application.conta.dtos.DadosCadastroConta;
+import bank.api.domain.conta.validators.Validador;
 import bank.api.infra.exceptions.ClosedBankException;
 import jakarta.enterprise.context.ApplicationScoped;
 

@@ -2,13 +2,14 @@ package bank.api.services.transacao.validadores.saque;
 
 import bank.api.application.transacao.dtos.DadosNovaTransacao;
 import bank.api.domain.conta.repositories.IContaRepository;
+import bank.api.domain.transacao.validators.IValidadorSaque;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.PropertyValueException;
 
 @ApplicationScoped
-public class ValidadorExistenciaEAtivaConta implements IValidadorSaque{
+public class ValidadorExistenciaEAtivaConta implements IValidadorSaque {
     @Inject
     IContaRepository contaRepository;
     @Override

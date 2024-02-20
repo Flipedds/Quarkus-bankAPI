@@ -1,7 +1,7 @@
-package bank.api.services.transacao.validadores.transferencia;
+package bank.api.domain.transacao.validators;
 
 import bank.api.application.transacao.dtos.DadosNovaTransacao;
 
-public interface IValidadorTransferencia {
+public interface IValidadorDeposito {
     void validar(DadosNovaTransacao dados);
 }

@@ -1,4 +1,4 @@
-package bank.api.services.transacao.validadores.saque;
+package bank.api.domain.transacao.validators;
 
 import bank.api.application.transacao.dtos.DadosNovaTransacao;
 

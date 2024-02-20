@@ -1,12 +1,13 @@
 package bank.api.services.conta.validadores;
 
 import bank.api.application.conta.dtos.DadosCadastroConta;
+import bank.api.domain.conta.validators.Validador;
 import bank.api.infra.exceptions.ConflictException;
 import bank.api.infra.repositories.conta.ContaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 @ApplicationScoped
-public class ValidadorTipoContaPorCliente implements Validador{
+public class ValidadorTipoContaPorCliente implements Validador {
     @Inject
     ContaRepository contaRepository;
     @Override
