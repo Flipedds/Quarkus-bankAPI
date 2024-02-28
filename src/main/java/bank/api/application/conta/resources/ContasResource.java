@@ -3,6 +3,7 @@ package bank.api.application.conta.resources;
 import bank.api.application.conta.dtos.DadosCadastroConta;
 import bank.api.application.conta.dtos.DadosDetalhamentoConta;
 import bank.api.domain.conta.services.IContaService;
+import bank.api.domain.transacao.services.ITransacaoService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -13,6 +14,9 @@ import java.net.URI;
 public class ContasResource {
     @Inject
     IContaService contaService;
+
+    @Inject
+    ITransacaoService transacaoService;
 
     @POST
     @RolesAllowed("manager")
@@ -36,6 +40,14 @@ public class ContasResource {
         var conta = contaService.findConta(id);
         return Response.status(200).entity(new DadosDetalhamentoConta(conta)).build();
     }
+
+    @GET
+    @Path("/extrato/{id}")
+    @RolesAllowed("manager")
+    public Response recuperaExtrato(@PathParam("id") Long id){
+        return Response.status(200).entity(transacaoService.getExtrato(id)).build();
+    }
+
 
     @DELETE
     @Path("/{id}")
