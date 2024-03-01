@@ -1,14 +1,14 @@
-# Bank API
+# 💸 Bank API
 
 <img loading="lazy" src="http://img.shields.io/static/v1?label=JAVA&message=V11&color=GREEN&style=for-the-badge"/> <img loading="lazy" src="http://img.shields.io/static/v1?label=MAVEN&message=3.9.6&color=orange&style=for-the-badge"/> <img loading="lazy" src="http://img.shields.io/static/v1?label=QUARKUS&message=3.7.2&color=red&style=for-the-badge"/> <img loading="lazy" src="http://img.shields.io/static/v1?label=JUNIT&message=V5&color=blue&style=for-the-badge"/>
 
 ![Imagem de um aparelho com duas setas divergentes em sua tela e uma moeda seguidos do nome do projeto centralizado](https://drive.usercontent.google.com/download?id=118W_dQP7qWIbqTBoauQHF-a38mvsw2v-&export=view&authuser=0)
 
-# Descrição
+# 📖 Descrição
 Rest API com funcionalidades de criar clientes, contas e transações em desenvolvimento
 utilizando Quarkus.
 
-# Tecnologias utilizadas
+# 🖥️ Tecnologias utilizadas
 * Java 21
 * Maven 3.6.9
 * Hibernate e panache
@@ -19,12 +19,12 @@ utilizando Quarkus.
 * Quarkus 3.7.2
 * Lombok
 
-# Funcionalidades da API
+# 🤖 Funcionalidades da API
 * criar, deletar, atualizar, e buscar clientes
 * criar, desativar, buscar contas, e seus respectivos extratos
 * efetuar transações entre contas
 
-# Endpoints
+# 🚏 Endpoints
 ### contas
 <img loading="lazy" src="http://img.shields.io/static/v1?label=GET&message=/contas&color=GREEN&style=for-the-badge"/> <br>
 
@@ -97,7 +97,7 @@ utilizando Quarkus.
 
 **Algumas configurações devem ser feitas antes de iniciar a aplicação** <br>
 
-## Utilizando o Keycloak para autenticação/ permissões de acesso
+## 🔐 Utilizando o Keycloak para autenticação/ permissões de acesso
 
     KEYCLOAK DOCKER RUN
 
@@ -126,7 +126,7 @@ utilizando Quarkus.
 
     Após isso, receberá um jwt token que deve ser utilizado para requisições na api
 
-## Definição dos dados de acesso ao banco de dados
+## 🎲 Definição dos dados de acesso ao banco de dados
     Criar um arquivo .env na raiz do projeto com as seguintes variáveis
     URL=jdbc:postgresql://host/banco
     SENHA=sua senha
@@ -134,8 +134,8 @@ utilizando Quarkus.
     alterar na primeria execução -> quarkus.flyway.migrate-at-start=true  
     !!!! logo após as migrações concluídas retornar para false para evitar conflitos
 
-## Verificar instalações
+## 🔧 Verificar instalações
     Verificar as instalações das versões de Java e Maven compatíveis com o projeto.
 
-## Executando o Projeto
+## 🖱️ Executando o Projeto
     mvn compile quarkus:dev -> o projeto rodará como padrão na porta 8080, outros serviços como Jenkins podem conflitar.
