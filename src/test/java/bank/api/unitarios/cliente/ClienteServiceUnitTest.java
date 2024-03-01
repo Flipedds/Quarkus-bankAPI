@@ -1,5 +1,6 @@
 package bank.api.unitarios.cliente;
 
+import bank.api.application.cliente.dtos.DadosAtualizarCliente;
 import bank.api.application.cliente.dtos.DadosCadastroCliente;
 import bank.api.application.cliente.dtos.DadosEndereco;
 import bank.api.domain.cliente.entities.Cliente;
@@ -13,7 +14,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -36,18 +36,13 @@ class ClienteServiceUnitTest {
     }
 
     @Test
-    void findAllClientes() {
-
-    }
-
-    @Test
     @DisplayName("buscando Cliente - service!")
     void findCliente() {
         // arrange
         DadosCadastroCliente dadosCadastroCliente = getDadosCadastroCliente();
 
         Cliente cliente = new Cliente(dadosCadastroCliente);
-        Mockito.when(clienteRepository.findById(any())).thenReturn(cliente);
+        Mockito.when(clienteRepository.findById(1L)).thenReturn(cliente);
 
         // act
         Cliente clienteRetornado = clienteService.findCliente(1L);
@@ -85,7 +80,7 @@ class ClienteServiceUnitTest {
         DadosCadastroCliente dadosCadastroCliente = getDadosCadastroCliente();
 
         Cliente cliente = new Cliente(dadosCadastroCliente);
-        Mockito.when(clienteRepository.findById(any())).thenReturn(cliente);
+        Mockito.when(clienteRepository.findById(1L)).thenReturn(cliente);
 
         assertDoesNotThrow(() -> clienteService.deleteCliente(1L));
     }
@@ -93,12 +88,39 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("Falha ao Remover Cliente - service!")
     void FailDeleteCliente() {
-        Mockito.when(clienteRepository.findById(any())).thenReturn(null);
+        Mockito.when(clienteRepository.findById(2L)).thenReturn(null);
         assertThrows(EntityNotFoundException.class, () -> clienteService.deleteCliente(2L));
     }
 
 
     @Test
+    @DisplayName("Atualizando Cliente - service!")
     void putCliente() {
+        // arrange
+        DadosAtualizarCliente dadosAtualizarCliente = new DadosAtualizarCliente(1L, "968695868", null, null);
+        DadosCadastroCliente dadosCadastroCliente = getDadosCadastroCliente();
+        Cliente cliente = new Cliente(dadosCadastroCliente);
+        cliente.setId(dadosAtualizarCliente.id());
+
+        Mockito.when(clienteRepository.findById(1L)).thenReturn(cliente);
+
+        // act
+        Cliente clienteRetornado = clienteService.putCliente(dadosAtualizarCliente);
+
+        // assert
+        assertNotNull(clienteRetornado);
+        assertEquals(1L, clienteRetornado.getId());
+        assertEquals(dadosAtualizarCliente.telefone(), clienteRetornado.getTelefone());
+    }
+
+    @Test
+    @DisplayName("Falha ao atualizar Cliente - service!")
+    void FailPutCliente() {
+        // arrange
+        DadosAtualizarCliente dadosAtualizarCliente = new DadosAtualizarCliente(2L, "968695868", null, null);
+        Mockito.when(clienteRepository.findById(2L)).thenReturn(null);
+
+        // act and assert
+        assertThrows(EntityNotFoundException.class, () -> clienteService.putCliente(dadosAtualizarCliente));
     }
 }
