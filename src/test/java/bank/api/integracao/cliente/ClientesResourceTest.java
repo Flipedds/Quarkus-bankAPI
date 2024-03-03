@@ -1,4 +1,4 @@
-package bank.api.integracao;
+package bank.api.integracao.cliente;
 
 import bank.api.application.cliente.resources.ClientesResource;
 import bank.api.domain.cliente.entities.Cliente;

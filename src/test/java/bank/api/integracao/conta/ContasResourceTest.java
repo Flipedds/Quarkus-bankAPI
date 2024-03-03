@@ -1,24 +1,29 @@
-package bank.api;
+package bank.api.integracao.conta;
 
 import bank.api.application.conta.resources.ContasResource;
+import bank.api.domain.conta.entities.Conta;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestMethodOrder;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 @TestHTTPEndpoint(ContasResource.class)
+@TestSecurity(user = "test", roles = {"manager"})
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ContasResourceTest {
 
-    private final String token = "";
+    private static Long id;
 
     @Test
+    @Order(1)
     void testCriandoContaComSucessoCodigo201() {
-        given()
-                .header("Authorization",
-                        "Bearer " + token)
+        Conta conta = given()
                 .contentType(ContentType.JSON)
                 .body("""
                         {
@@ -28,14 +33,15 @@ public class ContasResourceTest {
                         """)
                 .when().post()
                 .then()
-                .statusCode(201);
+                .statusCode(201)
+                .extract().as(Conta.class);
+            id = conta.getId();
         }
 
     @Test
+    @Order(2)
     void testErroAoCriarContaClienteNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body("""
                         {
@@ -49,70 +55,63 @@ public class ContasResourceTest {
     }
 
     @Test
+    @Order(3)
     void testBuscandoTodosAsContasAtivasComSucessoCodigo200(){
         given()
-                .header("Authorization",
-                        "Bearer " + token)
-                .when().get()
+                .when().get("?pagina=0&tamanho=4")
                 .then()
                 .statusCode(200);
     }
 
     @Test
+    @Order(4)
     void testBuscandoContaComSucessoCodigo200() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().get("/1")
                 .then()
                 .statusCode(200);
     }
 
     @Test
+    @Order(5)
     void testBuscandoContaQueNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().get("/1000")
                 .then()
                 .statusCode(404);
     }
 
     @Test
+    @Order(6)
     void testDesativandoContaQueNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().delete("/1000")
                 .then()
                 .statusCode(404);
     }
 
     @Test
+    @Order(7)
     void testDesativandoContaJaDesativadaCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
-                .when().delete("/2")
+                .when().delete("/3")
                 .then()
                 .statusCode(404);
     }
 
     @Test
+    @Order(8)
     void testDesativandoContaComSucessoCodigo204() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
-                .when().delete("/8")
+                .when().delete("/"+ id)
                 .then()
                 .statusCode(204);
     }
 
     @Test
+    @Order(9)
     void testErroAoCriarContaClienteJaPossuiEsteTipoDeContaCodigo409() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body("""
                         {
@@ -126,11 +125,10 @@ public class ContasResourceTest {
     }
 
     @Test
+    @Order(10)
     void testDesativandoContaComSaldoCodigo409() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
-                .when().delete("/5")
+                .when().delete("/2")
                 .then()
                 .statusCode(409);
     }

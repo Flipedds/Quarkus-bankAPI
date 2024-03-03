@@ -1,4 +1,4 @@
-package bank.api.integracao;
+package bank.api.integracao.cliente;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
