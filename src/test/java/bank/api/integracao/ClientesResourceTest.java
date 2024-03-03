@@ -1,55 +1,57 @@
-package bank.api;
+package bank.api.integracao;
 
 import bank.api.application.cliente.resources.ClientesResource;
+import bank.api.domain.cliente.entities.Cliente;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import net.datafaker.Faker;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestMethodOrder;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
+@TestSecurity(user = "test", roles = {"manager"})
 @TestHTTPEndpoint(ClientesResource.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ClientesResourceTest {
-    private final String token = "";
+    private static Long id;
     private final Faker faker = new Faker();
 
     @Test
+    @Order(1)
     void testBuscandoTodosOsClientesComSucessoCodigo200(){
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().get("?pagina=0&tamanho=20&order=reversed")
                 .then()
                 .statusCode(200);
     }
 
     @Test
+    @Order(2)
     void testBuscandoClienteComSucessoCodigo200() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
           .when().get("/1")
           .then()
              .statusCode(200);
     }
 
     @Test
+    @Order(3)
     void testBuscandoClienteQueNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().get("/100")
                 .then()
                 .statusCode(404);
     }
 
     @Test
+    @Order(4)
     void testCriandoClienteComSucessoCodigo201(){
-        given()
-                .header("Authorization",
-                        "Bearer " + token)
+        Cliente cliente = given()
                 .contentType(ContentType.JSON)
                 .body(String.format("""
                         {
@@ -74,14 +76,16 @@ class ClientesResourceTest {
                         faker.internet().emailAddress()))
                 .when().post()
                 .then()
-                .statusCode(201);
+                .statusCode(201)
+                .extract().as(Cliente.class);
+
+        id = cliente.getId();
     }
 
     @Test
+    @Order(5)
     void testErroAoCriarClienteCampoNomeFaltanteCodigo400(){
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(String.format("""
                         {
@@ -107,10 +111,9 @@ class ClientesResourceTest {
                 .statusCode(400);
     }
     @Test
+    @Order(6)
     void testAtualizandoClienteComSucessoCodigo200() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body("""
 
@@ -127,10 +130,9 @@ class ClientesResourceTest {
     }
 
     @Test
+    @Order(7)
     void testAtualizandoClienteQueNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body("""
 
@@ -147,21 +149,19 @@ class ClientesResourceTest {
     }
 
     @Test
+    @Order(8)
     void testDeletandoClienteQueNaoExisteCodigo404() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
                 .when().delete("/1000")
                 .then()
                 .statusCode(404);
     }
 
     @Test
+    @Order(9)
     void testDeletandoClienteComSucessoCodigo204() {
         given()
-                .header("Authorization",
-                        "Bearer " + token)
-                .when().delete("/4")
+                .when().delete("/"+ id)
                 .then()
                 .statusCode(204);
     }
