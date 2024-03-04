@@ -6,6 +6,7 @@ import bank.api.application.cliente.dtos.DadosListagemCliente;
 import bank.api.domain.cliente.entities.Cliente;
 import bank.api.domain.cliente.repositories.IClienteRepository;
 import bank.api.domain.cliente.services.IClienteService;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,6 +21,7 @@ public class ClienteService implements IClienteService {
     @Inject
     IClienteRepository clienteRepository;
 
+    @CacheResult(cacheName = "clientes")
     public List<DadosListagemCliente> findAllClientes(int pagina, int tamanho, String order){
         Comparator<DadosListagemCliente> comparatorPorNome = Comparator.comparing(DadosListagemCliente::nome);
         if(Objects.equals(order, "reversed")){

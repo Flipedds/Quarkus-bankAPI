@@ -11,6 +11,7 @@ import bank.api.domain.transacao.services.IDepositoService;
 import bank.api.domain.transacao.services.ISaqueService;
 import bank.api.domain.transacao.services.ITransacaoService;
 import bank.api.domain.transacao.services.ITransferenciaService;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -47,6 +48,7 @@ public class TransacaoService implements ITransacaoService {
     }
 
     @Override
+    @CacheResult(cacheName = "transacoes")
     public List<DadosListagemTransacao> findAllTransacoes(int pagina, int tamanho) {
         return transacaoRepository.findAll()
                 .page(Page.of(pagina, tamanho))
