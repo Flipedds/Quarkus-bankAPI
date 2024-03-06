@@ -23,6 +23,6 @@ public class ValidadorSaldoConta implements IValidadorTransferencia {
 
     @Override
     public Integer getPriority() {
-        return 3;
+        return 4;
     }
 }
