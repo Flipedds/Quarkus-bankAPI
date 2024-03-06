@@ -1,15 +1,15 @@
 package bank.api.unitarios.conta;
 
-import bank.api.application.cliente.dtos.DadosCadastroCliente;
-import bank.api.application.cliente.dtos.DadosEndereco;
-import bank.api.application.conta.dtos.DadosCadastroConta;
-import bank.api.application.conta.dtos.DadosDetalhamentoConta;
-import bank.api.domain.cliente.entities.Cliente;
-import bank.api.domain.conta.entities.Conta;
-import bank.api.domain.conta.enums.TipoConta;
-import bank.api.domain.conta.repositories.IContaRepository;
-import bank.api.domain.conta.services.IContaService;
-import bank.api.domain.transacao.services.ITransacaoService;
+import bank.api.domain.repositories.IClienteRepository;
+import bank.api.presentation.dtos.cliente.DadosCadastroCliente;
+import bank.api.presentation.dtos.cliente.DadosEndereco;
+import bank.api.presentation.dtos.conta.DadosCadastroConta;
+import bank.api.presentation.dtos.conta.DadosDetalhamentoConta;
+import bank.api.domain.entities.Cliente;
+import bank.api.domain.entities.Conta;
+import bank.api.domain.enums.TipoConta;
+import bank.api.domain.repositories.IContaRepository;
+import bank.api.domain.services.IContaService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
@@ -28,7 +28,7 @@ public class ContaServiceUnitTest {
     IContaService contaService;
 
     @InjectMock
-    ITransacaoService transacaoService;
+    IClienteRepository clienteRepository;
 
     @InjectMock
     IContaRepository contaRepository;
@@ -43,21 +43,32 @@ public class ContaServiceUnitTest {
         return new Conta( 1L, new Cliente(dadosCadastroCliente), new BigDecimal(0), TipoConta.CORRENTE, LocalDateTime.now(), true);
     }
 
+    private static DadosCadastroCliente getDadosCadastroCliente() {
+        DadosEndereco endereco = new DadosEndereco(
+                "rua teste", "teste", "95849584", "teste", "te", "", 20);
+
+        return new DadosCadastroCliente(
+                "teste", "59584958495", "feminino", "968695869", "teste@gmail.com", endereco);
+    }
+
     @Test
     public void addConta(){
         // arrange
+        DadosCadastroCliente dadosCadastroCliente = getDadosCadastroCliente();
+        Cliente cliente = new Cliente(dadosCadastroCliente);
+        cliente.setId(1L);
         DadosCadastroConta dadosCadastroConta = new DadosCadastroConta(TipoConta.CORRENTE, 1L);
-        Mockito.when(contaRepository.findById(1L)).thenReturn(getConta());
+        Mockito.when(clienteRepository.findById(1L)).thenReturn(cliente);
 
         // act
         Conta contaRetornada = contaService.addConta(dadosCadastroConta);
 
         // assert
         assertNotNull(contaRetornada);
-        assertEquals(1L, contaRetornada.getId());
+        assertNull(contaRetornada.getId());
         assertEquals(TipoConta.CORRENTE, contaRetornada.getTipoConta());
         assertEquals(true, contaRetornada.getEstaAtiva());
-        assertEquals(new BigDecimal(100), contaRetornada.getSaldo());
+        assertEquals(new BigDecimal(0), contaRetornada.getSaldo());
     }
 
     @Test

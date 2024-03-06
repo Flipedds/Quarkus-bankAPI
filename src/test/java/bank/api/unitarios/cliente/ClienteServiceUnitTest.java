@@ -1,11 +1,11 @@
 package bank.api.unitarios.cliente;
 
-import bank.api.application.cliente.dtos.DadosAtualizarCliente;
-import bank.api.application.cliente.dtos.DadosCadastroCliente;
-import bank.api.application.cliente.dtos.DadosEndereco;
-import bank.api.domain.cliente.entities.Cliente;
-import bank.api.domain.cliente.repositories.IClienteRepository;
-import bank.api.domain.cliente.services.IClienteService;
+import bank.api.presentation.dtos.cliente.DadosAtualizarCliente;
+import bank.api.presentation.dtos.cliente.DadosCadastroCliente;
+import bank.api.presentation.dtos.cliente.DadosEndereco;
+import bank.api.domain.entities.Cliente;
+import bank.api.domain.repositories.IClienteRepository;
+import bank.api.domain.services.IClienteService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;

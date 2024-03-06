@@ -1,7 +1,7 @@
 package bank.api.integracao.cliente;
 
-import bank.api.application.cliente.resources.ClientesResource;
-import bank.api.domain.cliente.entities.Cliente;
+import bank.api.presentation.resources.ClientesResource;
+import bank.api.domain.entities.Cliente;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;

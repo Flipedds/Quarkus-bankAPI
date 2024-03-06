@@ -1,7 +1,7 @@
 package bank.api.integracao.conta;
 
-import bank.api.application.conta.resources.ContasResource;
-import bank.api.domain.conta.entities.Conta;
+import bank.api.presentation.resources.ContasResource;
+import bank.api.domain.entities.Conta;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
