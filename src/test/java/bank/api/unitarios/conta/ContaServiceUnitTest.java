@@ -85,7 +85,7 @@ public class ContaServiceUnitTest {
         assertNotNull(dadosDetalhamentoContaRetornada);
         assertEquals(conta.getId(), dadosDetalhamentoContaRetornada.id());
         assertEquals(conta.getTipoConta(), dadosDetalhamentoContaRetornada.tipoConta());
-        assertEquals(conta.getSaldo(), dadosDetalhamentoContaRetornada.saldo());
+        assertEquals(new BigDecimal(50), dadosDetalhamentoContaRetornada.saldo());
         assertEquals(conta.getData(), dadosDetalhamentoContaRetornada.dataCriacao());
         assertEquals(conta.getCliente().getId(), dadosDetalhamentoContaRetornada.clienteId());
         assertEquals(conta.getEstaAtiva(), dadosDetalhamentoContaRetornada.estaAtiva());

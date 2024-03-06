@@ -20,4 +20,9 @@ public class ValidadorSaldoConta implements IValidadorTransferencia {
             throw new PropertyValueException("saldo insuficiente para realizar transferencia", "DadosNovaTransacao", "valor");
         }
     }
+
+    @Override
+    public Integer getPriority() {
+        return 3;
+    }
 }

@@ -49,7 +49,7 @@ class ClienteServiceUnitTest {
 
         // assert
         assertNotNull(clienteRetornado);
-        assertEquals(cliente.getId(), clienteRetornado.getId());
+        assertEquals(1, clienteRetornado.getId());
         assertEquals(cliente.getNome(), clienteRetornado.getNome());
         assertEquals(cliente.getCpf(), clienteRetornado.getCpf());
         assertEquals(cliente.getTelefone(), clienteRetornado.getTelefone());

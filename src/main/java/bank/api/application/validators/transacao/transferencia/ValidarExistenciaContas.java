@@ -23,4 +23,9 @@ public class ValidarExistenciaContas implements IValidadorTransferencia {
             throw new EntityNotFoundException("Conta destino não encontrada !");
         }
     }
+
+    @Override
+    public Integer getPriority() {
+        return 1;
+    }
 }

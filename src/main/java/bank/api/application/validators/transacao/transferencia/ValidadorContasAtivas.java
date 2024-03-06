@@ -25,4 +25,9 @@ public class ValidadorContasAtivas implements IValidadorTransferencia {
             throw new PropertyValueException("conta destino deve estar ativa para receber a transferência", "DadosNovaTransacao", "idContaDestino");
         }
     }
+
+    @Override
+    public Integer getPriority() {
+        return 2;
+    }
 }

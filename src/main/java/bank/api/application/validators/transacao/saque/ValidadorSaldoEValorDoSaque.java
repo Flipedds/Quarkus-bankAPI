@@ -25,4 +25,9 @@ public class ValidadorSaldoEValorDoSaque implements IValidadorSaque {
             throw new PropertyValueException("Saldo insuficiente para realizar o saque", "DadosNovaTransacao", "valor");
         }
     }
+
+    @Override
+    public Integer getPriority (){
+        return 2;
+    }
 }

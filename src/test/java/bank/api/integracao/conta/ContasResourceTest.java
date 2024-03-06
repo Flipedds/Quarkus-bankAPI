@@ -27,8 +27,8 @@ public class ContasResourceTest {
                 .contentType(ContentType.JSON)
                 .body("""
                         {
-                          "tipoConta": "POUPANCA",
-                          "clienteId": 2
+                          "tipoConta": "CORRENTE",
+                          "clienteId": 4
                         }
                         """)
                 .when().post()

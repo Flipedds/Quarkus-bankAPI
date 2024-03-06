@@ -9,10 +9,9 @@ import bank.api.domain.validators.IValidadorSaque;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+import java.util.Comparator;
 
 @ApplicationScoped
 public class SaqueService implements ISaqueService {
@@ -28,11 +27,14 @@ public class SaqueService implements ISaqueService {
 
     @Override
     public Transacao sacar(DadosNovaTransacao dados) {
-        validadoresSaque.forEach(v -> v.validar(dados));
+        validadoresSaque.stream()
+                .sorted(Comparator.comparingInt(IValidadorSaque::getPriority))
+                .forEach(v -> v.validar(dados));
+
         var conta = contaRepository.findById(dados.idConta());
-        int saldoDaConta = Integer.parseInt(String.valueOf(conta.getSaldo()));
-        int valorDoSaque = Integer.parseInt(String.valueOf(dados.valor()));
-        conta.setSaldo(BigDecimal.valueOf(saldoDaConta - valorDoSaque));
+        BigDecimal saldoDaConta = conta.getSaldo();
+        BigDecimal valorDoSaque = dados.valor();
+        conta.setSaldo(saldoDaConta.subtract(valorDoSaque));
         Transacao transacao = new Transacao(null, dados.tipoTransacao(), dados.valor(),
                 LocalDateTime.now(), conta, null);
         transacaoRepository.persist(transacao);

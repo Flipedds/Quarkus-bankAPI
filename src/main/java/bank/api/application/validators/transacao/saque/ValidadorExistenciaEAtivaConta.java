@@ -19,7 +19,11 @@ public class ValidadorExistenciaEAtivaConta implements IValidadorSaque {
             throw new EntityNotFoundException("Conta não encontrada !");
         }
         if(!conta.getEstaAtiva()){
-            throw new PropertyValueException("conta deve estar ativa par realizar saque", "DadosNovaTransacao", "idConta");
+            throw new PropertyValueException("conta deve estar ativa para realizar saque", "DadosNovaTransacao", "idConta");
         }
+    }
+    @Override
+    public Integer getPriority (){
+        return 1;
     }
 }

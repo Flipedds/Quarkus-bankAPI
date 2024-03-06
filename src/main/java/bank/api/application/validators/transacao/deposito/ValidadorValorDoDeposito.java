@@ -14,4 +14,9 @@ public class ValidadorValorDoDeposito implements IValidadorDeposito {
             throw new PropertyValueException("Valor do depósito deve ser maior que 0 !", "DadosNovaTransacao", "valor");
         }
     }
+
+    @Override
+    public Integer getPriority() {
+        return 2;
+    }
 }

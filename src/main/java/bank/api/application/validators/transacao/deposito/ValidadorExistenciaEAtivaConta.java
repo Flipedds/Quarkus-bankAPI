@@ -23,4 +23,9 @@ public class ValidadorExistenciaEAtivaConta implements IValidadorDeposito {
             throw new PropertyValueException("conta deve estar ativa para realizar deposito !", "DadosNovaTransacao", "idConta");
         }
     }
+
+    @Override
+    public Integer getPriority() {
+        return 1;
+    }
 }

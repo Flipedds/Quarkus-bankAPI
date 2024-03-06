@@ -1,5 +1,6 @@
 package bank.api.application.services;
 
+import bank.api.domain.validators.IValidadorDeposito;
 import bank.api.presentation.dtos.transacao.DadosNovaTransacao;
 import bank.api.domain.repositories.IContaRepository;
 import bank.api.domain.entities.Transacao;
@@ -12,6 +13,7 @@ import jakarta.inject.Inject;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 @ApplicationScoped
 public class TransferenciaService implements ITransferenciaService {
@@ -27,15 +29,18 @@ public class TransferenciaService implements ITransferenciaService {
 
     @Override
     public Transacao transferir(DadosNovaTransacao dados) {
-        validadoresTransferencia.forEach(v -> v.validar(dados));
+        validadoresTransferencia
+                .stream()
+                .sorted(Comparator.comparingInt(IValidadorTransferencia::getPriority))
+                .forEach(v -> v.validar(dados));
         var conta = contaRepository.findById(dados.idConta());
-        int saldoDaConta = Integer.parseInt(String.valueOf(conta.getSaldo()));
-        int valorDaTransferencia = Integer.parseInt(String.valueOf(dados.valor()));
+        BigDecimal saldoDaConta = conta.getSaldo();
+        BigDecimal valorDaTransferencia = dados.valor();
         var contaDestino = contaRepository.findById(dados.idContaDestino());
-        int saldoDaContaDestino = Integer.parseInt(String.valueOf(contaDestino.getSaldo()));
+        BigDecimal saldoDaContaDestino = contaDestino.getSaldo();
 
-        conta.setSaldo(BigDecimal.valueOf(saldoDaConta - valorDaTransferencia));
-        contaDestino.setSaldo(BigDecimal.valueOf(saldoDaContaDestino + valorDaTransferencia));
+        conta.setSaldo(saldoDaConta.subtract(valorDaTransferencia));
+        contaDestino.setSaldo(saldoDaContaDestino.add(valorDaTransferencia));
         Transacao transacao = new Transacao(null, dados.tipoTransacao(), dados.valor(),
                 LocalDateTime.now(), conta, contaDestino);
         transacaoRepository.persist(transacao);
