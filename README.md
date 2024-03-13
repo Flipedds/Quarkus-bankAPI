@@ -93,6 +93,14 @@ utilizando Quarkus.
   }
 }</pre>
 
+### autenticação
+<img loading="lazy" src="http://img.shields.io/static/v1?label=POST&message=/autenticacao&color=blue&style=for-the-badge"/> <br>
+<pre>{
+    "username" : "usuario",
+    "password" : "senha"
+}</pre>
+
+
 # 🛠 Configurando e Rodando o Projeto
 
 **Algumas configurações devem ser feitas antes de iniciar a aplicação** <br>
@@ -113,18 +121,13 @@ utilizando Quarkus.
     criação de user com login e senha
     criação de role manager e atribuição ao user criado
     
-    Requisição postman para a url
-    URL PARA RECEBER O ACESS TOKEN -> http://localhost:8180/realms/quarkus/protocol/openid-connect/token
+    Requisição postman para o endpoint /autenticacao com o body
+    {
+        "username" : "usuario",
+        "password" : "senha"
+    }
 
-    # Método POST PASSANDO AUTH -> Basic Auth -> Username e Password
-    Padrão -> backend-service e secret
-    
-    BODY -> x-www-form-urlencoded
-    username -> criado anteriormente no realm
-    password -> criada anteriormente no realm
-    grant_type -> password
-
-    Após isso, receberá um jwt token que deve ser utilizado para requisições na api
+    Após isso, receberá um jwt token que deve ser utilizado para requisições na api.
 
 ## 🎲 Definição dos dados de acesso ao banco de dados
     Criar um arquivo .env na raiz do projeto com as seguintes variáveis
